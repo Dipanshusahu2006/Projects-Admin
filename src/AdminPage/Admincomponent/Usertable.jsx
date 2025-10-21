@@ -9,7 +9,7 @@ function Userlist() {
   const Fethuser = async () => {
     try {
       const UserData = await fetch("https://main-projectnode.vercel.app/user/Get");
-      const UserssUrl = await  UserData .json();
+      const UserssUrl = await  UserData.json();
       setUsertable(UserssUrl.Data || []);
     } catch (error) {
       console.error(error);

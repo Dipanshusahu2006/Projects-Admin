@@ -1,49 +1,46 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { Pie } from "react-chartjs-2";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
+
+// ✅ Move constant colors outside the component to avoid re-creation and ESLint warnings
+const COLORS = [
+  "rgba(75, 192, 192, 0.8)",
+  "rgba(255, 99, 132, 0.8)",
+  "rgba(255, 205, 86, 0.8)",
+  "rgba(54, 162, 235, 0.8)",
+  "rgba(153, 102, 255, 0.8)",
+  "rgba(255, 159, 64, 0.8)",
+];
+
+const BORDER_COLORS = COLORS.map((c) => c.replace("0.8", "1"));
 
 export default function PieChartCard() {
   const chartRef = useRef(null);
   const [products, setProducts] = useState([]);
 
-  async function Pieproductsquantity() {
+  // ✅ Fetch Data
+  const fetchPieData = async () => {
     try {
-      const Piedata = await fetch("http://localhost:3000/Cart");
-      const Pieurl = await Piedata.json();
-      setProducts(Pieurl);
+      const response = await fetch("http://localhost:3000/Cart");
+      const data = await response.json();
+      setProducts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
-  }
+  };
 
   useEffect(() => {
-    Pieproductsquantity();
+    fetchPieData();
   }, []);
 
-  // ✅ Correct mapping
+  // ✅ Prepare labels and values
   const labels = products.map((product) => product.ProductCategory);
   const values = products.map((product) => product.ProductQuantity);
-
-  const colors = [
-    "rgba(75, 192, 192, 0.8)",
-    "rgba(255, 99, 132, 0.8)",
-    "rgba(255, 205, 86, 0.8)",
-    "rgba(54, 162, 235, 0.8)",
-    "rgba(153, 102, 255, 0.8)",
-    "rgba(255, 159, 64, 0.8)",
-  ];
-
-  const borderColors = colors.map((c) => c.replace("0.8", "1"));
-
   const total = values.reduce((sum, val) => sum + val, 0);
 
+  // ✅ Memoize chart data for performance
   const data = useMemo(
     () => ({
       labels,
@@ -51,8 +48,8 @@ export default function PieChartCard() {
         {
           label: "Category Share (%)",
           data: values,
-          backgroundColor: colors,
-          borderColor: borderColors,
+          backgroundColor: COLORS,
+          borderColor: BORDER_COLORS,
           borderWidth: 2,
           hoverOffset: 12,
         },
@@ -61,6 +58,7 @@ export default function PieChartCard() {
     [labels, values]
   );
 
+  // ✅ Memoize options
   const options = useMemo(
     () => ({
       responsive: true,
@@ -82,7 +80,7 @@ export default function PieChartCard() {
           callbacks: {
             label: (ctx) => {
               const quantity = ctx.parsed;
-              const percent = ((quantity / total) * 100).toFixed(1);
+              const percent = total > 0 ? ((quantity / total) * 100).toFixed(1) : 0;
               return `${ctx.label}: ${quantity} (${percent}%)`;
             },
           },
@@ -92,15 +90,18 @@ export default function PieChartCard() {
     [total]
   );
 
-  const onClick = (evt) => {
+  // ✅ Handle click event on chart
+  const handleChartClick = (evt) => {
     const chart = chartRef.current;
     if (!chart) return;
+
     const points = chart.getElementsAtEventForMode(
       evt,
       "nearest",
       { intersect: true },
       true
     );
+
     if (points.length) {
       const firstPoint = points[0];
       const label = chart.data.labels[firstPoint.index];
@@ -119,7 +120,7 @@ export default function PieChartCard() {
               ref={chartRef}
               data={data}
               options={options}
-              onClick={onClick}
+              onClick={handleChartClick}
               style={{ width: "650px" }}
             />
           </div>

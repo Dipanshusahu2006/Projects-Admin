@@ -12,7 +12,7 @@ function Enqirylist() {
   const FethEnquriries = async () => {
     try {
       const Enqiriesdata = await fetch("https://main-projectnode.vercel.app/enqury/Get");
-      const Enqiriesurl = await Enqiriesdata .json();
+      const Enqiriesurl = await Enqiriesdata.json();
       setEnquiryitem(Enqiriesurl.Data || []);
     } catch (error) {
       console.error(error);

@@ -19,7 +19,7 @@ function Dashboard() {
 
       async function Productss () {
         const  Productsnumber = await fetch("https://main-projectnode.vercel.app/product/Get")
-        const Producttmes = await Productsnumber .json();
+        const Producttmes = await Productsnumber.json();
         setproduct(Producttmes.Data || [])
       }
        async function Admin () {
@@ -29,7 +29,7 @@ function Dashboard() {
       }
        async function Orderss () {
         const Ordernumber = await fetch("https://main-projectnode.vercel.app/order/Get")
-        const Orderitmes = await Ordernumber .json();
+        const Orderitmes = await Ordernumber.json();
         setorders(Orderitmes.Data || [])
       }
 

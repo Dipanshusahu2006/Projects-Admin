@@ -32,14 +32,14 @@ function Adminlogin(){
          (User) => User.Username === username && User.Userpassword === password
        );
        if (Adminuser) {
-        if(Adminuser.role == "Admin"){
+        if(Adminuser.role === "Admin"){
           toast.success("Admin login successfully");
          localStorage.setItem("Id1", Adminuser._id);
          setTimeout(() => {
            navigate("/");
          }, 2000);
         }
-         if(Adminuser.role == "Subadmin"){
+         if(Adminuser.role === "Subadmin"){
           toast.success("Subadmin login successfully");
          localStorage.setItem("Id2", Adminuser._id);
          setTimeout(() => {
@@ -90,7 +90,8 @@ return(
         </div>
 
         <p className="signup-text">Have not account yet?</p>
-        <a href="#" className="signup-link">Contact Admin</a>
+        <button className="signup-link">Contact Admin</button>
+
       </div>
     </div>
     </>
