@@ -23,9 +23,9 @@ export default function PieChartCard() {
   // ✅ Fetch Data
   const fetchPieData = async () => {
     try {
-      const response = await fetch("http://localhost:3000/Cart");
+      const response = await fetch("https://main-projectnode.vercel.app/cart/Get");
       const data = await response.json();
-      setProducts(Array.isArray(data) ? data : []);
+      setProducts(data?.Data || []);
     } catch (error) {
       console.error("Error fetching products:", error);
     }
