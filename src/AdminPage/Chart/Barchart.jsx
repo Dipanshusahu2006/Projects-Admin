@@ -14,22 +14,32 @@ ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 function BarChart() {
   const [products, setProducts] = useState([]);
 
-  async function Barproductsquantity() {
-    try {
-      const response = await fetch("https://main-projectnode.vercel.app/cart/Get");
-      const data = await response.json();
-      setProducts(data?.Data || []);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  }
-
   useEffect(() => {
-    Barproductsquantity();
-  }, []);
-
+      const fetchOrdersdetalaies = async () => {
+        try {
+          const res = await fetch("https://main-projectnode.vercel.app/order/Get");
+          const data = await res.json();
+          const Ordersdatas = data.Data || [];
+  
+          // Flatten the order structure to get all products with username
+          const allProducts = Ordersdatas.flatMap(order =>
+            (order.products || []).map(product => ({
+              ...product,
+              username: order.username, // attach buyer username
+            }))
+          );
+  
+          setProducts(allProducts);
+        } catch (err) {
+          console.error("Error fetching orders:", err);
+        }
+      };
+  
+      fetchOrdersdetalaies();
+    }, []);
+  
   const data = {
-    labels: products.map((product) => product.ProductCategory), // dynamic labels
+    labels: products.map((product) => product.ProductCategory), 
     datasets: [
       {
         label: "Product Quantity",

@@ -21,19 +21,30 @@ export default function PieChartCard() {
   const [products, setProducts] = useState([]);
 
   // ✅ Fetch Data
-  const fetchPieData = async () => {
-    try {
-      const response = await fetch("https://main-projectnode.vercel.app/cart/Get");
-      const data = await response.json();
-      setProducts(data?.Data || []);
-    } catch (error) {
-      console.error("Error fetching products:", error);
-    }
-  };
-
-  useEffect(() => {
-    fetchPieData();
-  }, []);
+ useEffect(() => {
+       const fetchOrdersdetalaies = async () => {
+         try {
+           const res = await fetch("https://main-projectnode.vercel.app/order/Get");
+           const data = await res.json();
+           const Ordersdatas = data.Data || [];
+   
+           // Flatten the order structure to get all products with username
+           const allProducts = Ordersdatas.flatMap(order =>
+             (order.products || []).map(product => ({
+               ...product,
+               username: order.username, // attach buyer username
+             }))
+           );
+   
+           setProducts(allProducts);
+         } catch (err) {
+           console.error("Error fetching orders:", err);
+         }
+       };
+   
+       fetchOrdersdetalaies();
+     }, []);
+   
 
   // ✅ Prepare labels and values
   const labels = products.map((product) => product.ProductCategory);

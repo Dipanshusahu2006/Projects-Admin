@@ -9,6 +9,8 @@ function ProductForm() {
   const [productImage, setProductImage] = useState("");
   const [productCategory, setProductCategory] = useState("");
   const [productQuantity, setProductQuantity] = useState("");
+   const [productDescriptione, setproductDescriptione] = useState("");
+    const [productbrand, setproductbrand] = useState("");
 
   const Productshop = async (e) => {
     e.preventDefault();
@@ -33,6 +35,8 @@ function ProductForm() {
       "ProductImage": productImage,
       "ProductCategory": productCategory,
       "ProductQuantity": 1,
+      "ProductDescription" : productDescriptione,
+      "ProductBrand" : productbrand
     };
     try {
       const productAdds = await fetch("https://main-projectnode.vercel.app/product/Post", {
@@ -97,6 +101,29 @@ function ProductForm() {
         value={productCategory}
         onChange={(e) => {
           setProductCategory(e.target.value);
+        }}
+        required
+      /> 
+        <label htmlFor="product-category">Product Descriptione:</label>
+      <input
+        type="text"
+        id="product-category"
+        name="product-category"
+        value={productDescriptione}
+        onChange={(e) => {
+          setproductDescriptione(e.target.value);
+        }}
+        required
+      />
+
+      <label htmlFor="product-category">Product Brand:</label>
+      <input
+        type="text"
+        id="product-category"
+        name="product-category"
+        value={productbrand}
+        onChange={(e) => {
+          setproductbrand(e.target.value);
         }}
         required
       />

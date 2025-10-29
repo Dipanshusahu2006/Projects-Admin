@@ -481,6 +481,69 @@ background: linear-gradient(90deg, #13547a, #80d0c7);
     background-Color:#33ccff;
     padding: 11px 20px;
 }
+.Orderstable{
+   background-color: #f3f7fa;
+}
+
+.OrdersList{
+    margin-left: 50px;
+   
+}
+
+.OrdersList th{
+   padding: 12px 40px;
+   background-color: gray;
+   color: white;
+   text-align: center;
+   
+}
+.OrdersList td{
+   padding: 12px 40px;
+   background-color: white;
+   color: black;
+   text-align: center;
+}
+
+.OrdersList a{
+  text-decoration: none;
+  
+}
+.action-icons {
+ text-align: center;
+}
+
+.status-badge {
+  padding: 5px 12px;
+  border-radius: 12px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.status-processed {
+  background-color: #ffeec9;
+  color: #b87305;
+}
+
+.status-pending {
+  background-color: #fff2e6;
+  color: #d48a00;
+}
+
+.status-delivered {
+  background-color: #d7ffe6;
+  color: #0a8a45;
+}
+
+.status-cancelled {
+  background-color: #ffe2e2;
+  color: #d42d2d;
+}
+
+.action-icons a {
+  color: gray;
+}
+
+
 
 .MAIN-Reply {
   display: flex;

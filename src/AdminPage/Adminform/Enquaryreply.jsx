@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 
 function Adminreply() {
     const {id} = useParams();
+    const [Userid, setUserid] = useState("");
   const [CustomerName, setCustomerName] = useState("");
   const [Emaileaddress, setEmaileaddress] = useState("");
   const [BillNumber, setBillNumber] = useState("");
@@ -28,6 +29,7 @@ function Adminreply() {
           setEmaileaddress(Enquryreply.Emaileaddress);
           setBillNumber(Enquryreply.BillNumber);
           setcustomerNumber(Enquryreply.CustomerNumber);
+           setUserid(Enquryreply.userId);
         };
         fetchEnquiryreply();
       }, [id]);
@@ -36,6 +38,7 @@ function Adminreply() {
 
   async function Fetchreply() {
     const Replydata = {
+      "userId" : Userid ,
       "CustomerName": CustomerName,
       "Emaileaddress": Emaileaddress,
       "BillNumber": BillNumber,

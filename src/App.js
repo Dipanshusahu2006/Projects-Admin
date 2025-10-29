@@ -12,6 +12,7 @@ import ProductForm from './AdminPage/Adminform/Productsadd';
 import BarChart from './AdminPage/Chart/Barchart';
 import PieChartCard from './AdminPage/Chart/Piechart';
 import Adminreply from './AdminPage/Adminform/Enquaryreply';
+import Orderdetalais from './AdminPage/Admincomponent/Orderdetalais';
 
 function App() {
   const id1 = localStorage.getItem("Id1");
@@ -27,6 +28,7 @@ function App() {
       <Route path="/AdminEdit/:id" element={<AdminEdit />} />
        <Route path="/UsersEdit/:id" element={<UsersEdit />} />
        <Route path="/ProductEdit/:ProductName" element={<ProductEdIt />} />
+       <Route path="/Orderdetalais/:Orderid" element={<Orderdetalais />} />
       <Route path="/ProductsForm" element={<ProductForm />} />
          <Route path="/Barchart" element={<BarChart />} />
           <Route path="/PieChart" element={< PieChartCard/>} />

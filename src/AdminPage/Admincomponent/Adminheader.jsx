@@ -88,11 +88,10 @@ function Adminhaeder() {
       </div>
 
       <div className="PROFILES" style={profiles}>
-        <h2>{slicenurl.Username}</h2>
-        <h3>{slicenurl.UserEmail}</h3>
-        <h3>{slicenurl.Userpassword}</h3>
-        <h3>{slicenurl.Usernumber}</h3>
-        <h3>{slicenurl.role}</h3>
+        <h2>Name:                 {slicenurl.Username}</h2>
+        <h3>Email:               {slicenurl.UserEmail}</h3>
+        <h3>Number:                {slicenurl.Usernumber}</h3>
+        <h3>Role:                 {slicenurl.role}</h3>
       </div>
     </>
   );
