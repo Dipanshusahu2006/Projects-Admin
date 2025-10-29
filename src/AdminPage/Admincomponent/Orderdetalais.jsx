@@ -28,7 +28,7 @@ function Orderdetalais() {
     };
 
     fetchOrdersdetalaies();
-  }, []);
+  }, [Orderid]);
 
   return (
     <>  
