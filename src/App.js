@@ -27,7 +27,7 @@ function App() {
      <Route path="/AdminLogin" element={<Adminlogin Adminid={id1} />} />
       <Route path="/AdminEdit/:id" element={<AdminEdit />} />
        <Route path="/UsersEdit/:id" element={<UsersEdit />} />
-       <Route path="/ProductEdit/:ProductName" element={<ProductEdIt />} />
+       <Route path="/ProductEdit/:slug" element={<ProductEdIt />} />
        <Route path="/Orderdetalais/:Orderid" element={<Orderdetalais />} />
       <Route path="/ProductsForm" element={<ProductForm />} />
          <Route path="/Barchart" element={<BarChart />} />
