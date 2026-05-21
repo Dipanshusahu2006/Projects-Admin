@@ -17,7 +17,9 @@ function ProductEdIt() {
 
   useEffect(() => {
     const fetchProductsdata = async () => {
-      const response = await fetch(`https://main-projectnode.vercel.app/product/Get/${ProductName}`);
+      const response = await fetch(
+  `https://main-projectnode.vercel.app/product/Get/${encodeURIComponent(ProductName)}`
+);
       const data = await response.json();
       const ProductData = data?.Data || {};
       setProductName(ProductData.ProductName);
@@ -46,7 +48,7 @@ function ProductEdIt() {
       ProductBrand: productBrand.trim() || productBrand
     }
     try {
-      const ProdusEdit = await fetch(`https://main-projectnode.vercel.app/product/Edit/${ProductName}`, {
+      const ProdusEdit = await fetch(`https://main-projectnode.vercel.app/product/Edit/${encodeURIComponent(ProductName)}`, {
         method: "PUt",
         body: JSON.stringify(prducts),
         headers: {
