@@ -80,7 +80,7 @@ function Productstable() {
                       <button onClick={() =>Deletesproducts(Products._id)} className="Deletebuttone" >Delete</button>
                     </td>
                     <td>
-                       <button  className="Editbuttone"><Link to={`/ProductEdit/${Products.ProductName}`}>Edit</Link></button>
+                       <button  className="Editbuttone"><Link to={`/ProductEdit/${Products.slug}`}>Edit</Link></button>
                     </td>
                   </tr>
                 );
