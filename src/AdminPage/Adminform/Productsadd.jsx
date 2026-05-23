@@ -19,7 +19,7 @@ function ProductForm() {
         const Productsurl = await Productsdata.json();
         const Productadd = Productsurl.Data || [];
         const Filterproducts = Productadd.find(
-          (products) => products.ProductName ===productName || products.ProductCategory === productCategory 
+          (products) => products.ProductName ===productName 
         );
         if (Filterproducts) {
           toast.error("Already Products add this is name and category ");
