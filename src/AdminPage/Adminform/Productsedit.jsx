@@ -8,7 +8,7 @@ function ProductEdIt() {
   
   const navigate = useNavigate()
   const [productName, setProductName] = useState("");
-  const {slug} = useParams();
+  const {slug} = useParams()
   const [productDescription, setProductDescription] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [productImage, setProductImage] = useState("");
@@ -28,7 +28,7 @@ function ProductEdIt() {
       setProductBrand(ProductData.ProductBrand);
     };
     fetchProductsdata();
-  }, [ProductName]);
+  }, [slug]);
 
   const ShopEDit = (e) => {
     e.preventDefault();
@@ -47,7 +47,7 @@ function ProductEdIt() {
     }
     try {
       const ProdusEdit = await fetch(`https://main-projectnode.vercel.app/product/Edit/${slug}`, {
-        method: "PUt",
+        method: "PUT",
         body: JSON.stringify(prducts),
         headers: {
           "Content-Type": "application/json"
