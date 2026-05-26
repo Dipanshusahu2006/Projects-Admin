@@ -37,13 +37,27 @@ function BarChart() {
   
       fetchOrdersdetalaies();
     }, []);
+
+     const categoryData =  products.reduce((acc,product)=>{
+
+      const category = product.ProductCategory ;
+      const quantity = Number(product.ProductQuantity);
+
+      if (acc[category]){
+            acc[category] += quantity;
+      }
+      else{
+        acc[category] = quantity ;
+      }
+      return acc;
+     },{})
   
   const data = {
-    labels: products.map((product) => product.ProductCategory), 
+    labels: Object.keys(categoryData),
     datasets: [
       {
         label: "Product Quantity",
-        data: products.map((product) => product.ProductQuantity),
+        data: Object.values(categoryData),
         backgroundColor: "rgba(75,192,192,0.6)",
         borderRadius: 5,
       },

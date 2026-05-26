@@ -44,11 +44,25 @@ export default function PieChartCard() {
    
        fetchOrdersdetalaies();
      }, []);
+
+         const categoryData = products.reduce((acc,product)=>{
+           const category = product.ProductCategory;
+           const quantity = Number(product.ProductQuantity);
+
+           if (acc[category]){
+            acc[category] += quantity
+           }
+           else{
+            acc[category] = quantity
+           }
+           return acc ;
+
+         },{})
    
 
   // ✅ Prepare labels and values
-  const labels = products.map((product) => product.ProductCategory);
-  const values = products.map((product) => product.ProductQuantity);
+  const labels = Object.keys(categoryData)
+  const values = Object.values(categoryData)
   const total = values.reduce((sum, val) => sum + val, 0);
 
   // ✅ Memoize chart data for performance

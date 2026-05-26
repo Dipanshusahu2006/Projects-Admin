@@ -1,5 +1,5 @@
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import '../../App.css';
 import toast, { Toaster } from "react-hot-toast";
 
@@ -8,19 +8,49 @@ function ProductForm() {
   const [productPrice, setProductPrice] = useState("");
   const [productImage, setProductImage] = useState("");
   const [productCategory, setProductCategory] = useState("");
+  const [categories, setCategories] = useState([]);
+  const [showCategoryInput, setShowCategoryInput] = useState(false);
   const [productQuantity, setProductQuantity] = useState("");
    const [productDescriptione, setproductDescriptione] = useState("");
     const [productbrand, setproductbrand] = useState("");
 
+       const productAddscategriros = () => {
+  setShowCategoryInput(true);
+};
+
+const productclosecategriros = () => {
+  setShowCategoryInput(false);
+};
+
+     useEffect(() => {
+   const fetchCategories = async () => {
+    try {
+      const response = await fetch(
+        "https://main-projectnode.vercel.app/product/Get"
+      );
+
+      const data = await response.json();
+      setCategories(data.Data || []);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  fetchCategories();
+  }, []);
+
+  const uniqueCategories = [
+  ...new Set(categories.map((item) => item.ProductCategory))
+       ];
+
   const Productshop = async (e) => {
     e.preventDefault();
 
-    const Productsdata = await fetch("https://main-projectnode.vercel.app/product/Get");
-        const Productsurl = await Productsdata.json();
-        const Productadd = Productsurl.Data || [];
-        const Filterproducts = Productadd.find(
-          (products) => products.ProductName ===productName 
-        );
+    const Filterproducts = categories.find(
+  (products) =>
+    products.ProductName.toLowerCase() ===
+    productName.toLowerCase()
+);
         if (Filterproducts) {
           toast.error("Already Products add this is name and category ");
         } else {
@@ -34,7 +64,7 @@ function ProductForm() {
       "ProductPrice": productPrice,
       "ProductImage": productImage,
       "ProductCategory": productCategory,
-      "ProductQuantity": 1,
+      "ProductQuantity": productQuantity,
       "ProductDescription" : productDescriptione,
       "ProductBrand" : productbrand
     };
@@ -47,8 +77,16 @@ function ProductForm() {
         },
       });
       if (productAdds.ok) {
-        toast.success("Product added successfully");
-      } else {
+      toast.success("Product added successfully");
+
+      setProductName("");
+     setProductPrice("");
+     setProductImage("");
+    setProductCategory("");
+    setProductQuantity("");
+    setproductDescriptione("");
+      setproductbrand("");
+} else {
         toast.error("Error adding product");
       }
     } catch (error) {
@@ -94,16 +132,21 @@ function ProductForm() {
         required
       />
       <label htmlFor="product-category">Product Category:</label>
-      <input
-        type="text"
-        id="product-category"
-        name="product-category"
-        value={productCategory}
-        onChange={(e) => {
-          setProductCategory(e.target.value);
-        }}
-        required
-      /> 
+
+      <select className="product-select"
+     value={productCategory}
+      onChange={(e) => setProductCategory(e.target.value)}
+       >
+  <option value="">Select Category</option>
+
+  {uniqueCategories.map((productoption, index) => (
+    <option key={index} value={productoption.ProductCategory} >
+      {productoption}
+    </option>
+  ))}
+  
+</select>
+
         <label htmlFor="product-category">Product Descriptione:</label>
       <input
         type="text"
@@ -138,6 +181,35 @@ function ProductForm() {
         }}
         required
       />
+       {!showCategoryInput ? (
+  <button
+    type="button"
+    className="add-category-btn"
+    onClick={productAddscategriros}
+  >
+    Add New Category
+  </button>
+) : (
+  <button
+    type="button"
+    className="add-category-btn"
+    onClick={productclosecategriros}
+  >
+    Close Category
+  </button>
+)}
+      {showCategoryInput && (
+        
+   <input
+    type="text"
+    className="product-select"
+    placeholder="Enter New Category"
+    value={productCategory}
+    onChange={(e) =>
+      setProductCategory(e.target.value)
+    }
+  />
+)}
       <button id="btn1" type="submit" onClick={Productshop}>
         Submit
       </button>

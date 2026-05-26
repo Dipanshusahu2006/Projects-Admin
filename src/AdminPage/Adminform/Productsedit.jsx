@@ -54,7 +54,7 @@ function ProductEdIt() {
         }
       });
       if (ProdusEdit.ok) {
-        toast.success("Products EDit succesfully");
+        toast.success("Product Edit Succesfully");
         setTimeout(() => {
           navigate("/");
         }, 2000);

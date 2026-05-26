@@ -22,10 +22,13 @@ function AdminPannel({ Adminid }) {
 
   // Redirect if admin not logged in
   useEffect(() => {
-    if (!Adminid) {
-      navigate("/AdminLogin");
-    }
-  }, [Adminid, navigate]);
+  const adminId =
+    localStorage.getItem("Id1");
+
+  if (!adminId) {
+    navigate("/AdminLogin");
+  }
+}, [navigate]);
 
   const Imgges = {
     Img: "https://themewagon.github.io/DashboardKit/assets/logo-B3nv2ngr.svg",
